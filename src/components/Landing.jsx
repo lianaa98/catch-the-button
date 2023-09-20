@@ -3,10 +3,14 @@ import "./styles/landing.css";
 import { Modal } from "./Modal";
 
 export function Landing() {
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [buttonWrapPosition, setButtonWrapPosition] = useState(null);
+  const [flapPosition, setFlapPosition] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [trueButtonAppear, setTrueButtonAppear] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [winningModalOpen, setWinningModalOpen] = useState(false);
   const [currentSpeech, setCurrentSpeech] = useState(null);
+  const [winningSpeech, setWinningSpeech] = useState(null);
 
   const speeches = [
     "ouch!",
@@ -15,6 +19,12 @@ export function Landing() {
     "that's not nice!",
     "you're mean!",
     "stop!",
+  ];
+
+  const winningSpeeches = [
+    "huh?! you found me!",
+    "alright alright, you got me!",
+    "you won!!",
   ];
 
   useEffect(() => {
@@ -31,14 +41,35 @@ export function Landing() {
   useEffect(() => {
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
-      setCursorPosition({ x: clientX, y: clientY });
+
+      const pageWidth = window.innerWidth;
+      const pageHeight = window.innerHeight;
+
+      if (isDragging) {
+        const flap = document.getElementById("flap");
+        const flapRect = flap.getBoundingClientRect();
+        const { left, top, width, height } = flapRect;
+
+        const newLeft = clientX - width / 2;
+        const newTop = clientY - height / 2;
+
+        if (
+          newLeft >= 0 &&
+          newLeft + width <= pageWidth &&
+          newTop >= 0 &&
+          newTop + height <= pageHeight
+        ) {
+          flap.style.position = "absolute";
+          flap.style.left = `${newLeft}px`;
+          flap.style.top = `${newTop}px`;
+          setTrueButtonAppear(true);
+        }
+      }
 
       if (buttonWrapPosition) {
         const { left, top, width, height } = buttonWrapPosition;
 
         const threshold = 20;
-        const pageWidth = window.innerWidth;
-        const pageHeight = window.innerHeight;
 
         const isCloseToLeft =
           left - clientX <= threshold && left - clientX >= 0;
@@ -93,9 +124,77 @@ export function Landing() {
     };
   }, [buttonWrapPosition]);
 
+  function handleMouseDown(e) {
+    const flap = document.getElementById("flap");
+    const flapRect = flap.getBoundingClientRect();
+    const { left, top, width, height } = flapRect;
+    setFlapPosition({
+      left: left,
+      top: top,
+      width: width,
+      height: height,
+    });
+
+    const { clientX, clientY } = e;
+    const isInsideFlap =
+      clientX >= left &&
+      clientX <= left + width &&
+      clientY >= top &&
+      clientY <= top + height;
+
+    if (isInsideFlap) {
+      setIsDragging(true);
+    }
+  }
+
+  function handleMouseUp(e) {
+    setIsDragging(false);
+    console.log("not dragging");
+    const flap = document.getElementById("flap");
+    const flapRect = flap.getBoundingClientRect();
+    const { left, top, width, height } = flapRect;
+
+    setFlapPosition({
+      left: left,
+      top: top,
+      width: width,
+      height: height,
+    });
+  }
+
   return (
     <div className="landing_page">
-      <h1 className="landing_title">catch the button</h1>
+      <div className="landing_title">
+        <h1 id="landing_title_left">catch the</h1>
+        <h1
+          id="flap"
+          onMouseDown={(e) => {
+            handleMouseDown(e);
+          }}
+          onMouseUp={(e) => {
+            handleMouseUp(e);
+          }}
+        >
+          button
+        </h1>
+        {trueButtonAppear && (
+          <button
+            id="true_button"
+            onClick={() => {
+              setWinningSpeech(
+                winningSpeeches[
+                  Math.floor(Math.random() * winningSpeeches.length)
+                ]
+              );
+              setWinningModalOpen(true);
+            }}
+          >
+            ?!
+          </button>
+        )}
+        {winningModalOpen && <Modal currentSpeech={winningSpeech} />}
+      </div>
+
       <div id="landing_button_wrap">
         <button
           id="landing_button"
