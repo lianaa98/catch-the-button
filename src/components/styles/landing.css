@@ -15,17 +15,26 @@
 #landing_button_wrap {
   position: absolute;
   top: 40%;
-  width: 100px;
-  height: 5%;
+  width: 180px;
+  height: 40px;
   padding: 3px;
   padding-right: 3px;
+  display: flex;
+  justify-content: center;
 }
 
 #landing_button {
   border: none;
   background-color: #ea4b4b;
+  width: 45px;
+  border-radius: 50%;
   font-size: 1rem;
   cursor: pointer;
   color: white;
-  box-shadow: 7px 7px 0px 0px #f265ebbf;
+  box-shadow: 0px 6px 0px 0px #f265ebbf;
+  outline: none;
+}
+
+.modal {
+  margin-left: 20px;
 }
