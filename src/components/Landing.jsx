@@ -149,7 +149,6 @@ export function Landing() {
 
   function handleMouseUp(e) {
     setIsDragging(false);
-    console.log("not dragging");
     const flap = document.getElementById("flap");
     const flapRect = flap.getBoundingClientRect();
     const { left, top, width, height } = flapRect;
@@ -201,12 +200,14 @@ export function Landing() {
           onClick={() => {
             const button = document.getElementById("landing_button");
             button.style.boxShadow = "none";
+            button.style.marginTop = "6px";
             setCurrentSpeech(
               speeches[Math.floor(Math.random() * speeches.length)]
             );
             setModalOpen(true);
             setTimeout(() => {
               button.style.boxShadow = "0px 6px 0px 0px #f265ebbf";
+              button.style.marginTop = "0px";
             }, 300);
           }}
         ></button>
