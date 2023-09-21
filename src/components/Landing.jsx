@@ -13,13 +13,15 @@ export function Landing() {
   const [currentSpeech, setCurrentSpeech] = useState(null);
   const [winningSpeech, setWinningSpeech] = useState(null);
 
-  const speeches = ["ouch! why?", "that hurts!", "oww! not me!", ":(", "heyy! :("];
-
-  const winningSpeeches = [
-    "you got me",
-    "?!?!?!",
-    "okayyy",
+  const speeches = [
+    "ouch! why?",
+    "that hurts!",
+    "oww! not me!",
+    ":(",
+    "heyy! :(",
   ];
+
+  const winningSpeeches = ["you got me", "?!?!?!", "okayyy"];
 
   useEffect(() => {
     const buttonWrap = document.getElementById("landing_button_wrap");
@@ -188,8 +190,15 @@ export function Landing() {
         {winningModalOpen && <Modal currentSpeech={winningSpeech} />}
       </div>
 
-      {!winningModalOpen && <p>hmm, this button runs away when your cursor moves closer...</p>}
-      {tipShown && !winningModalOpen && <p>***That's not the winning button. Please try your best to catch THE button!***</p>}
+      {!winningModalOpen && (
+        <p>hmm, this button runs away when your cursor moves closer...</p>
+      )}
+      {tipShown && !winningModalOpen && (
+        <p>
+          ***That's not the winning button. Please try your best to catch THE
+          button!***
+        </p>
+      )}
       {winningModalOpen && <h2 id="winning_phrase">You found the button!</h2>}
 
       <div id="landing_button_wrap">
@@ -217,6 +226,9 @@ export function Landing() {
           <Modal currentSpeech={currentSpeech} />
         )}
       </div>
+      <p id="end">
+        made with ♡ by <a href="https://github.com/lianaa98">lianaa98</a>
+      </p>
     </div>
   );
 }

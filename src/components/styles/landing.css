@@ -70,3 +70,8 @@
 .modal {
   margin-left: 20px;
 }
+
+#end {
+  position: absolute;
+  top: 90%;
+}
