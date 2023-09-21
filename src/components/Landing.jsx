@@ -8,23 +8,17 @@ export function Landing() {
   const [isDragging, setIsDragging] = useState(false);
   const [trueButtonAppear, setTrueButtonAppear] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [tipShown, setTipShown] = useState(false);
   const [winningModalOpen, setWinningModalOpen] = useState(false);
   const [currentSpeech, setCurrentSpeech] = useState(null);
   const [winningSpeech, setWinningSpeech] = useState(null);
 
-  const speeches = [
-    "ouch!",
-    "that hurts!",
-    "stop it!",
-    "that's not nice!",
-    "you're mean!",
-    "stop!",
-  ];
+  const speeches = ["ouch!", "that hurts!", "oww!"];
 
   const winningSpeeches = [
-    "huh?! you found me!",
-    "alright alright, you got me!",
-    "you won!!",
+    "you got me",
+    "?!?!?!",
+    "okayyy",
   ];
 
   useEffect(() => {
@@ -188,11 +182,15 @@ export function Landing() {
               setWinningModalOpen(true);
             }}
           >
-            ?!
+            👑
           </button>
         )}
         {winningModalOpen && <Modal currentSpeech={winningSpeech} />}
       </div>
+
+      {!winningModalOpen && <p>hmm, this button runs away when your cursor moves closer...</p>}
+      {tipShown && !winningModalOpen && <p>please try your best to catch THE button!</p>}
+      {winningModalOpen && <h2 id="winning_phrase">You found the button!</h2>}
 
       <div id="landing_button_wrap">
         <button
@@ -201,6 +199,7 @@ export function Landing() {
             const button = document.getElementById("landing_button");
             button.style.boxShadow = "none";
             button.style.marginTop = "6px";
+
             setCurrentSpeech(
               speeches[Math.floor(Math.random() * speeches.length)]
             );
@@ -208,10 +207,15 @@ export function Landing() {
             setTimeout(() => {
               button.style.boxShadow = "0px 6px 0px 0px #f265ebbf";
               button.style.marginTop = "0px";
-            }, 300);
+            }, 500);
+            setTimeout(() => {
+              setTipShown(true);
+            }, 2000);
           }}
         ></button>
-        {modalOpen && <Modal currentSpeech={currentSpeech} />}
+        {modalOpen && !winningModalOpen && (
+          <Modal currentSpeech={currentSpeech} />
+        )}
       </div>
     </div>
   );
