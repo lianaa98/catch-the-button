@@ -13,7 +13,7 @@ export function Landing() {
   const [currentSpeech, setCurrentSpeech] = useState(null);
   const [winningSpeech, setWinningSpeech] = useState(null);
 
-  const speeches = ["ouch!", "that hurts!", "oww!"];
+  const speeches = ["ouch! why?", "that hurts!", "oww! not me!", ":(", "heyy! :("];
 
   const winningSpeeches = [
     "you got me",
@@ -63,7 +63,7 @@ export function Landing() {
       if (buttonWrapPosition) {
         const { left, top, width, height } = buttonWrapPosition;
 
-        const threshold = 20;
+        const threshold = 50;
 
         const isCloseToLeft =
           left - clientX <= threshold && left - clientX >= 0;
@@ -189,7 +189,7 @@ export function Landing() {
       </div>
 
       {!winningModalOpen && <p>hmm, this button runs away when your cursor moves closer...</p>}
-      {tipShown && !winningModalOpen && <p>please try your best to catch THE button!</p>}
+      {tipShown && !winningModalOpen && <p>***That's not the winning button. Please try your best to catch THE button!***</p>}
       {winningModalOpen && <h2 id="winning_phrase">You found the button!</h2>}
 
       <div id="landing_button_wrap">
