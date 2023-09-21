@@ -1,8 +1,8 @@
 # catch the button
 
-👾 completed this game in a few hours
+👾 made this website in a few hours for fun :P
 
-👾 please use computer to play the game, using your phone is considered cheating!! 👀
+👾 please use computer to play the game for best experience 👀
 
 come and try catching the button!
 
@@ -10,6 +10,12 @@ deployed below:
 
 🔗 [catch the button](https://catch-the-button.vercel.app/) 🔗
 
-![](/docs/index.png)
+![](/docs/landing.png)
 
-😶‍🌫️ hmm, this button runs away when your cursor moves closer... please try your best to catch THE button!!
+... please try your best to catch THE button!!
+
+
+### Tech Stack
+- React
+- Javascript
+- CSS
